@@ -94,7 +94,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: agentowners/agentowners/check-action@v0
+      - uses: cschanhniem/AGENTOWNERS@v0
         with:
           policy-path: ".github/AGENTOWNERS.yml"
           mode: "both"

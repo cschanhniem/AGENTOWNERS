@@ -1,0 +1,53 @@
+name: AGENTOWNERS Check
+description: >
+  Enforces AGENTOWNERS policy on pull requests and issues.
+  Detects AI-agent contributions, evaluates policy rules, posts
+  a verdict comment, and optionally fails the check on blocked actions.
+
+author: cschanhniem
+
+branding:
+  icon: shield
+  color: orange
+
+inputs:
+  policy-path:
+    description: Path to the AGENTOWNERS policy file
+    required: false
+    default: .github/AGENTOWNERS.yml
+  mode:
+    description: "Enforcement mode: comment | check | both | dry-run"
+    required: false
+    default: comment
+  fail-on-block:
+    description: Fail the workflow step when decision is block
+    required: false
+    default: "true"
+  fail-on-require-approval:
+    description: Fail the workflow step when decision is require_approval
+    required: false
+    default: "false"
+  add-labels:
+    description: Apply suggested labels to the PR or issue
+    required: false
+    default: "true"
+  known-agent-actors:
+    description: >
+      Comma-separated list of GitHub actor logins to treat as known agents
+      in addition to those configured in the policy file
+    required: false
+    default: ""
+
+outputs:
+  decision:
+    description: "Final policy decision: allow | require_approval | block"
+  risk-score:
+    description: Numeric risk score from 0 to 100+
+  risk-level:
+    description: "Risk level: low | medium | high | critical"
+  matched-rules:
+    description: JSON array of matched rule names
+
+runs:
+  using: node20
+  main: packages/github-action/dist/index.js
