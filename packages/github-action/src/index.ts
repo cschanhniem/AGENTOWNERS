@@ -196,7 +196,7 @@ async function run(): Promise<void> {
     core.setOutput('decision', decision.effect);
     core.setOutput('risk-score', String(decision.riskScore));
     core.setOutput('risk-level', decision.riskLevel);
-    core.setOutput('matched-rules', JSON.stringify(decision.matchedRules.map((r) => r.name)));
+    core.setOutput('matched-rules', JSON.stringify(decision.matchedRules.map((r: import('@agentowners/core').MatchedRule) => r.name)));
 
     // 13. Write audit artifact
     const auditRecord = renderAuditJson({
