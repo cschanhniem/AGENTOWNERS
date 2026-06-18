@@ -12,6 +12,8 @@ permissions:
 jobs:
   release:
     runs-on: ubuntu-latest
+    environment: release
+
     steps:
       - uses: actions/checkout@v4
 
@@ -32,10 +34,14 @@ jobs:
       - name: Run tests
         run: pnpm test
 
-      - name: Publish to npm
-        run: pnpm -r publish --no-git-checks
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Publish @agent-owners/core
+        run: pnpm --filter @agent-owners/core publish --provenance --access public --no-git-checks
+
+      - name: Publish @agent-owners/cli
+        run: pnpm --filter @agent-owners/cli publish --provenance --access public --no-git-checks
+
+      - name: Publish @agent-owners/github-action
+        run: pnpm --filter @agent-owners/github-action publish --provenance --access public --no-git-checks
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
