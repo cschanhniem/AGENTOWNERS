@@ -1,0 +1,4 @@
+{
+  "eventType": "pull_request.opened",
+  "actor": "github-copilot[bot]"
+}

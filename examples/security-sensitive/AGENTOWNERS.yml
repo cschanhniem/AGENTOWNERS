@@ -1,0 +1,41 @@
+version: 1
+
+defaults:
+  known_agent: require_approval
+  unknown_agent: block
+  docs_only: require_approval
+  workflows: block
+  secrets: block
+
+rules:
+  - name: "Block unknown agents"
+    when:
+      agents:
+        - "unknown"
+    effect: block
+    reason: "Unknown agents cannot act in this repository."
+
+  - name: "Block all workflow edits"
+    when:
+      files:
+        - ".github/workflows/**"
+    effect: block
+    reason: "CI/CD workflows must be edited by humans."
+
+  - name: "Block auth/security edits"
+    when:
+      files:
+        - "**/auth/**"
+        - "**/security/**"
+        - "**/permissions/**"
+    effect: block
+    reason: "Security-sensitive code must be changed by accountable humans."
+
+  - name: "Require approval for test changes"
+    when:
+      files:
+        - "**/*.test.*"
+        - "**/*.spec.*"
+        - "tests/**"
+    effect: require_approval
+    reason: "Agents may weaken tests accidentally."

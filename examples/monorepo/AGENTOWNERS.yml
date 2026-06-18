@@ -1,0 +1,36 @@
+version: 1
+
+defaults:
+  unknown_agent: require_approval
+  known_agent: require_approval
+  workflows: block
+  secrets: block
+
+rules:
+  - name: "Allow docs-only changes in any package"
+    when:
+      docs_only: true
+    effect: allow
+    reason: "Docs are low risk."
+
+  - name: "Block workflow edits"
+    when:
+      files:
+        - ".github/workflows/**"
+    effect: block
+    reason: "Workflows must be changed by humans."
+
+  - name: "Require approval for packages/core changes"
+    when:
+      files:
+        - "packages/core/**"
+    effect: require_approval
+    reviewers:
+      - "@core-maintainers"
+    reason: "Core package changes need careful review."
+
+  - name: "Require approval for dependency changes"
+    when:
+      changes_package_files: true
+    effect: require_approval
+    reason: "Dependency changes affect supply-chain risk."

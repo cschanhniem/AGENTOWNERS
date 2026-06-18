@@ -1,0 +1,35 @@
+version: 1
+
+defaults:
+  known_agent: require_approval
+  unknown_agent: require_approval
+  docs_only: require_approval
+  workflows: block
+  secrets: block
+
+rules:
+  - name: "Block sensitive paths"
+    when:
+      files:
+        - ".github/workflows/**"
+        - ".github/actions/**"
+        - "**/auth/**"
+        - "**/security/**"
+        - "**/permissions/**"
+        - "infra/**"
+        - "terraform/**"
+        - "k8s/**"
+    effect: block
+    reason: "Agents may not modify sensitive operational or security paths."
+
+  - name: "Require approval for large diffs"
+    when:
+      diff_lines_over: 300
+    effect: require_approval
+    reason: "Large AI-generated diffs are hard to review safely."
+
+  - name: "Require approval for dependencies"
+    when:
+      changes_package_files: true
+    effect: require_approval
+    reason: "Dependency changes can affect supply-chain risk."

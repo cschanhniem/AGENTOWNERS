@@ -1,0 +1,167 @@
+version: 1
+
+# ─────────────────────────────────────────────────────────────────────────────
+# AGENTOWNERS.yml — CODEOWNERS for AI agents
+#
+# Place this file at:  .github/AGENTOWNERS.yml
+#
+# Full reference:  docs/policy-reference.md
+# ─────────────────────────────────────────────────────────────────────────────
+
+# ── Agent definitions ────────────────────────────────────────────────────────
+# Map agent names to the GitHub actors (usernames / bot accounts) that
+# represent them.  Any actor not matched by an agent entry is treated as
+# "unknown_agent" and falls through to the defaults section below.
+
+agents:
+  github-copilot:
+    match:
+      actors:
+        - "github-copilot[bot]"
+        - "copilot-swe-agent[bot]"
+      # Also match PRs whose title starts with a Copilot prefix
+      prTitlePatterns:
+        - "^\\[Copilot\\]"
+    allowed:
+      - open_pr
+      - update_pr
+      - comment
+      - label_issue
+      - modify_docs
+    requires_approval:
+      - request_changes
+      - modify_tests
+      - modify_dependencies
+    blocked:
+      - approve_pr
+      - merge_pr
+      - edit_workflows
+      - touch_secrets
+      - change_permissions
+      - modify_auth
+      - modify_infra
+
+  claude-code:
+    match:
+      actors:
+        - "claude[bot]"
+      bodyPatterns:
+        - "Generated with Claude Code"
+    allowed:
+      - open_pr
+      - update_pr
+      - comment
+      - modify_docs
+      - modify_tests
+    requires_approval:
+      - modify_dependencies
+      - request_changes
+    blocked:
+      - approve_pr
+      - merge_pr
+      - edit_workflows
+      - touch_secrets
+      - change_permissions
+      - modify_auth
+      - modify_infra
+
+  dependabot:
+    match:
+      actors:
+        - "dependabot[bot]"
+    allowed:
+      - open_pr
+      - update_pr
+      - comment
+      - modify_dependencies
+    requires_approval:
+      - modify_auth
+      - modify_infra
+    blocked:
+      - approve_pr
+      - merge_pr
+      - edit_workflows
+      - touch_secrets
+      - change_permissions
+
+# ── Default policy for agents not matched above ───────────────────────────────
+defaults:
+  unknown_agent: require_approval   # allow | require_approval | block
+  allow_docs_only: true             # auto-allow docs-only PRs from any agent
+  require_approval_deps: true       # require approval for dependency changes
+  block_workflow_edits: true        # always block workflow edits from agents
+  block_auth_changes: true          # always block auth/permission changes
+  max_diff_lines: 500               # require approval when diff exceeds this
+
+# ── Rules ─────────────────────────────────────────────────────────────────────
+# Rules are evaluated top-to-bottom.  The first matching rule wins.
+# Valid effects:  allow | require_approval | block
+
+rules:
+  # Hard blocks — evaluated first
+  - name: "Block workflow edits by any agent"
+    when:
+      files:
+        - ".github/workflows/**"
+        - ".github/actions/**"
+    effect: block
+    reason: "AI agents may not modify CI/CD workflows without maintainer approval."
+
+  - name: "Block secrets and credentials"
+    when:
+      files:
+        - ".env*"
+        - "**/*.pem"
+        - "**/*.key"
+        - "**/secrets/**"
+    effect: block
+    reason: "Agents must not touch secret or credential files."
+
+  - name: "Block permission and auth changes"
+    when:
+      changes_auth: true
+    effect: block
+    reason: "Auth and permission changes require direct maintainer action."
+
+  # Require approval — second tier
+  - name: "Require approval for infrastructure changes"
+    when:
+      changes_infra: true
+    effect: require_approval
+    reviewers:
+      - "@maintainers/infra"
+    reason: "Infrastructure changes require human review."
+
+  - name: "Require approval for dependency changes"
+    when:
+      changes_package_files: true
+    effect: require_approval
+    reviewers:
+      - "@maintainers/core"
+    reason: "Dependency changes must be reviewed before merge."
+
+  - name: "Require approval for large diffs"
+    when:
+      diff_lines_over: 300
+    effect: require_approval
+    reason: "PRs with large diffs require human review."
+
+  - name: "Require approval for test-only changes"
+    when:
+      tests_only: true
+    effect: require_approval
+    reason: "Test-only changes still require a review pass."
+
+  # Explicit allows — last tier
+  - name: "Allow docs-only agent PRs"
+    when:
+      docs_only: true
+    effect: allow
+    reason: "Docs-only changes from agents are low risk."
+
+# ── Audit configuration ───────────────────────────────────────────────────────
+audit:
+  enabled: true
+  comment: true       # Post a verdict comment on every evaluated PR
+  sticky: true        # Update the existing comment rather than adding a new one
+  label_agent_prs: true  # Add an "agent-pr" label to agent-created PRs

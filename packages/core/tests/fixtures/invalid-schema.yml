@@ -1,0 +1,8 @@
+version: 2
+agents:
+  bot:
+    match:
+      actors:
+        - some-bot
+    allowed:
+      - not_a_real_action

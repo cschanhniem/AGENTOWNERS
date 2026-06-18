@@ -1,0 +1,72 @@
+version: 1
+
+agents:
+  dependabot:
+    match:
+      actors:
+        - dependabot[bot]
+      prTitlePatterns:
+        - "^chore\\(deps\\)"
+    allowed:
+      - open_pr
+      - update_pr
+      - comment
+    requires_approval:
+      - modify_dependencies
+    blocked:
+      - touch_secrets
+      - merge_pr
+
+  renovate:
+    match:
+      actors:
+        - renovate[bot]
+      labels:
+        - dependencies
+    allowed:
+      - open_pr
+      - update_pr
+      - modify_dependencies
+    blocked:
+      - touch_secrets
+      - merge_pr
+      - edit_workflows
+
+defaults:
+  unknown_agent: require_approval
+  known_agent: allow
+  docs_only: allow
+  workflows: require_approval
+  secrets: block
+
+rules:
+  - name: block-secret-changes
+    when:
+      actions:
+        - touch_secrets
+    effect: block
+    reason: Agents must not touch secrets without explicit human approval.
+
+  - name: require-review-for-auth
+    when:
+      actions:
+        - modify_auth
+      agents:
+        - dependabot
+        - renovate
+    effect: require_approval
+    reviewers:
+      - "@security-team"
+    labels:
+      - security-review
+    reason: Auth changes require security team sign-off.
+
+  - name: allow-docs-updates
+    when:
+      docs_only: true
+    effect: allow
+    reason: Documentation-only changes are safe to auto-approve.
+
+audit:
+  enabled: true
+  output: audit-log.jsonl

@@ -1,0 +1,28 @@
+version: 1
+
+defaults:
+  known_agent: require_approval
+  unknown_agent: require_approval
+  docs_only: allow
+  workflows: block
+  secrets: block
+
+rules:
+  - name: "Allow docs-only changes"
+    when:
+      docs_only: true
+    effect: allow
+    reason: "Docs-only changes are low risk."
+
+  - name: "Block workflow edits"
+    when:
+      files:
+        - ".github/workflows/**"
+    effect: block
+    reason: "Agents may not modify GitHub Actions workflows."
+
+  - name: "Require approval for dependency changes"
+    when:
+      changes_package_files: true
+    effect: require_approval
+    reason: "Dependency changes require maintainer review."
