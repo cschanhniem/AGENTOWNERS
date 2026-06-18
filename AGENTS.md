@@ -7,9 +7,9 @@
 
 AGENTOWNERS is a TypeScript monorepo that ships a governance layer for AI agents in GitHub repositories:
 
-- `@agentowners/core` — deterministic policy engine (schema, evaluation, detection, scoring, rendering)
-- `@agentowners/cli` — `agentowners` CLI tool  
-- `@agentowners/github-action` — GitHub Action for CI enforcement
+- `@agent-owners/core` — deterministic policy engine (schema, evaluation, detection, scoring, rendering)
+- `@agent-owners/cli` — `agentowners` CLI tool  
+- `@agent-owners/github-action` — GitHub Action for CI enforcement
 
 ## Quickstart for agents
 
@@ -128,17 +128,17 @@ Add new public exports to `packages/core/src/index.ts`.
 - **TDD**: write the failing test first, then implement
 - **Fixtures over mocks**: use `tests/fixtures/` for integration scenarios
 - **Deterministic**: tests must not depend on clock, randomness, or network
-- **Coverage target**: 80%+ on `@agentowners/core`
+- **Coverage target**: 80%+ on `@agent-owners/core`
 
 ```bash
 # Run with coverage
-pnpm --filter @agentowners/core test -- --coverage
+pnpm --filter @agent-owners/core test -- --coverage
 
 # Run a single test file
-pnpm --filter @agentowners/core test -- packages/core/tests/evaluator.test.ts
+pnpm --filter @agent-owners/core test -- packages/core/tests/evaluator.test.ts
 
 # Run tests matching a pattern
-pnpm --filter @agentowners/core test -- --reporter verbose -t "block rule"
+pnpm --filter @agent-owners/core test -- --reporter verbose -t "block rule"
 ```
 
 ## Git workflow
@@ -190,7 +190,7 @@ These are roadmap items for v2+ (see spec section 27).
 2. **Mutating `MatchedRule`** — return new objects, never mutate
 3. **Changing decision priority** — `block > require_approval > allow` is immutable
 4. **Printing secret values** — always redact with `[REDACTED]`
-5. **Adding network calls to `@agentowners/core`** — core is pure/stateless
+5. **Adding network calls to `@agent-owners/core`** — core is pure/stateless
 6. **Skipping barrel export** — always add new exports to `src/index.ts`
 
 ## Roadmap hooks (design for these, don't build yet)

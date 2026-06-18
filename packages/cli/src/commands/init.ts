@@ -1,7 +1,7 @@
 import * as fs from 'fs'
 import * as path from 'path'
 import { Command } from 'commander'
-import { getProfile } from '@agentowners/core'
+import { getProfile } from '@agent-owners/core'
 
 export function registerInit(program: Command): void {
   program

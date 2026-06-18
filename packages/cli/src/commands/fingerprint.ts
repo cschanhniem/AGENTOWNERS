@@ -1,5 +1,5 @@
 import { Command } from 'commander'
-import { detectAgent } from '@agentowners/core'
+import { detectAgent } from '@agent-owners/core'
 import { getCommitMessages, getCurrentActor } from '../git.js'
 
 export function registerFingerprint(program: Command): void {

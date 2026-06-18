@@ -1,11 +1,11 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { Command } from 'commander'
 import { registerValidate } from '../src/commands/validate.js'
-import { loadPolicyFile } from '@agentowners/core'
+import { loadPolicyFile } from '@agent-owners/core'
 import { ZodError, ZodIssueCode } from 'zod'
 
-vi.mock('@agentowners/core', async () => {
-  const actual = await vi.importActual<typeof import('@agentowners/core')>('@agentowners/core')
+vi.mock('@agent-owners/core', async () => {
+  const actual = await vi.importActual<typeof import('@agent-owners/core')>('@agent-owners/core')
   return {
     ...actual,
     loadPolicyFile: vi.fn(),

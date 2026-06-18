@@ -1,7 +1,7 @@
 import * as fs from 'fs'
 import * as path from 'path'
 import { Command } from 'commander'
-import type { Decision } from '@agentowners/core'
+import type { Decision } from '@agent-owners/core'
 
 export function registerExplain(program: Command): void {
   program

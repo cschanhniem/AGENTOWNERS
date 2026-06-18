@@ -2,8 +2,8 @@
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
     "paths": {
-      "@agentowners/core": ["./packages/core/src/index.ts"],
-      "@agentowners/core/*": ["./packages/core/src/*"]
+      "@agent-owners/core": ["./packages/core/src/index.ts"],
+      "@agent-owners/core/*": ["./packages/core/src/*"]
     }
   },
   "include": ["packages/*/src/**/*"],

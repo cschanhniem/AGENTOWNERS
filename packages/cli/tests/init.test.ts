@@ -3,7 +3,7 @@ import * as fs from 'fs'
 import * as path from 'path'
 import { Command } from 'commander'
 import { registerInit } from '../src/commands/init.js'
-import { getProfile } from '@agentowners/core'
+import { getProfile } from '@agent-owners/core'
 
 vi.mock('fs', async () => {
   const actual = await vi.importActual<typeof fs>('fs')

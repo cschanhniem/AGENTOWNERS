@@ -1,5 +1,5 @@
 {
-  "name": "@agentowners/cli",
+  "name": "@agent-owners/cli",
   "version": "0.1.0",
   "description": "CLI for AGENTOWNERS policy enforcement",
   "license": "Apache-2.0",
@@ -18,7 +18,7 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@agentowners/core": "workspace:*",
+    "@agent-owners/core": "workspace:*",
     "commander": "^12.0.0",
     "zod": "^3.23.0"
   },

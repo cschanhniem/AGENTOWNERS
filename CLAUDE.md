@@ -20,19 +20,19 @@ pnpm format           # prettier --write
 
 Per-package:
 ```bash
-pnpm --filter @agentowners/core test
-pnpm --filter @agentowners/core test -- --coverage
-pnpm --filter @agentowners/cli test
-pnpm --filter @agentowners/github-action test
+pnpm --filter @agent-owners/core test
+pnpm --filter @agent-owners/core test -- --coverage
+pnpm --filter @agent-owners/cli test
+pnpm --filter @agent-owners/github-action test
 ```
 
 ## Package layout
 
 ```
 packages/
-  core/           @agentowners/core   — policy engine, pure TypeScript
-  cli/            @agentowners/cli    — CLI tool, depends on core
-  github-action/  @agentowners/github-action — GitHub Action, depends on core
+  core/           @agent-owners/core   — policy engine, pure TypeScript
+  cli/            @agent-owners/cli    — CLI tool, depends on core
+  github-action/  @agent-owners/github-action — GitHub Action, depends on core
 ```
 
 ## Tech stack
@@ -54,7 +54,7 @@ packages/
 1. **Decision priority is `block > require_approval > allow`.** Never change this.
 2. **Policy content is data, never code.** No `eval`, no `new Function`, no `require` from policy input.
 3. **Secrets are redacted.** Never print matched secret values. Always use `[REDACTED]`.
-4. **Core is stateless.** `@agentowners/core` has no network calls, no filesystem writes, no side effects. Pure input → output.
+4. **Core is stateless.** `@agent-owners/core` has no network calls, no filesystem writes, no side effects. Pure input → output.
 5. **Fail closed on unknown.** Unknown agent → `require_approval` by default, never silent `allow`.
 
 ## Import style

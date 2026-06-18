@@ -7,7 +7,7 @@ import {
   detectAgent,
   evaluatePolicy,
   renderVerdict,
-} from '@agentowners/core'
+} from '@agent-owners/core'
 import { getChangedFiles, getCommitMessages, getCurrentActor } from '../git.js'
 
 type CheckOptions = {

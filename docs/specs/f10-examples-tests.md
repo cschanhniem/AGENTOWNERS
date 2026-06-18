@@ -119,19 +119,19 @@ Apache-2.0
 - Scripts: test, build, lint, format
 
 ### `packages/core/package.json`
-- Name: `@agentowners/core`
+- Name: `@agent-owners/core`
 - Dependencies: zod, js-yaml, minimatch
 - DevDependencies: vitest, typescript, tsup
 
 ### `packages/cli/package.json`
-- Name: `@agentowners/cli`
+- Name: `@agent-owners/cli`
 - Bin: `agentowners`
-- Dependencies: @agentowners/core, commander
+- Dependencies: @agent-owners/core, commander
 - DevDependencies: vitest, typescript, tsup
 
 ### `packages/github-action/package.json`
-- Name: `@agentowners/github-action`
-- Dependencies: @agentowners/core, @actions/core, @actions/github
+- Name: `@agent-owners/github-action`
+- Dependencies: @agent-owners/core, @actions/core, @actions/github
 - DevDependencies: vitest, typescript, tsup
 
 ### Root tsconfig.json

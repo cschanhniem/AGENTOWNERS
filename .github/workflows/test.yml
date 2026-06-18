@@ -31,7 +31,7 @@ jobs:
         run: pnpm test
 
       - name: Coverage (core only)
-        run: pnpm --filter @agentowners/core test -- --coverage
+        run: pnpm --filter @agent-owners/core test -- --coverage
 
       - name: Type check
         run: pnpm typecheck

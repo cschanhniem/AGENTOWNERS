@@ -1,5 +1,5 @@
 {
-  "name": "@agentowners/github-action",
+  "name": "@agent-owners/github-action",
   "version": "0.1.0",
   "description": "GitHub Action for AGENTOWNERS policy enforcement",
   "license": "Apache-2.0",
@@ -15,7 +15,7 @@
   "dependencies": {
     "@actions/core": "^1.10.0",
     "@actions/github": "^6.0.0",
-    "@agentowners/core": "workspace:*"
+    "@agent-owners/core": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",

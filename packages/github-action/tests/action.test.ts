@@ -45,7 +45,7 @@ vi.mock('@actions/github', () => ({
   getOctokit: vi.fn(() => mockOctokit),
 }))
 
-// --- Mock @agentowners/core ---
+// --- Mock @agent-owners/core ---
 const mockDecisionAllow = {
   effect: 'allow' as const,
   riskScore: 10,
@@ -70,7 +70,7 @@ const mockDecisionBlock = {
   explanation: 'Blocked by policy.',
 }
 
-vi.mock('@agentowners/core', () => ({
+vi.mock('@agent-owners/core', () => ({
   loadPolicyFile: vi.fn().mockResolvedValue({ version: 1, rules: [], defaults: {} }),
   classifyFiles: vi.fn().mockReturnValue({
     docsOnly: false,
@@ -163,7 +163,7 @@ describe('GitHub Action — integration via mocks', () => {
     setupInputs()
     setupOctokitPR(['src/index.ts'])
 
-    const core = await import('@agentowners/core')
+    const core = await import('@agent-owners/core')
     vi.mocked(core.evaluatePolicy).mockReturnValue(mockDecisionAllow)
 
     // Dynamically run the action through its exported run function

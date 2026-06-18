@@ -1,5 +1,5 @@
 {
-  "name": "@agentowners/core",
+  "name": "@agent-owners/core",
   "version": "0.1.0",
   "description": "Core policy engine for AGENTOWNERS",
   "license": "Apache-2.0",

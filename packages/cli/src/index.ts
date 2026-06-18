@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// @agentowners/cli entry point
+// @agent-owners/cli entry point
 
 import { Command } from 'commander'
 import { registerInit } from './commands/init.js'

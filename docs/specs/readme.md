@@ -1300,9 +1300,9 @@ agentowners/agentowners
 NPM packages:
 
 ```text
-@agentowners/core
-@agentowners/cli
-@agentowners/github-action
+@agent-owners/core
+@agent-owners/cli
+@agent-owners/github-action
 ```
 
 CLI binary:

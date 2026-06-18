@@ -1,4 +1,4 @@
-// @agentowners/core — policy engine entry point
+// @agent-owners/core — policy engine entry point
 // Implementation follows spec section 29 (First implementation order)
 
 export * from './types.js';

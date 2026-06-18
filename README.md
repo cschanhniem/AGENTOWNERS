@@ -139,7 +139,7 @@ Suggested labels:
 ## CLI
 
 ```bash
-npm install -g @agentowners/cli
+npm install -g @agent-owners/cli
 
 # Create a policy file
 agentowners init --profile minimal

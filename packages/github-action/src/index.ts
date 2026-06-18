@@ -1,4 +1,4 @@
-// @agentowners/github-action — main action entrypoint
+// @agent-owners/github-action — main action entrypoint
 
 import * as core from '@actions/core';
 import * as github from '@actions/github';
@@ -12,8 +12,8 @@ import {
   evaluatePolicy,
   renderVerdict,
   renderAuditJson,
-} from '@agentowners/core';
-import type { GitHubEventType } from '@agentowners/core';
+} from '@agent-owners/core';
+import type { GitHubEventType } from '@agent-owners/core';
 import { getPRChangedFiles, getPRMetadata, getIssueMetadata } from './github.js';
 import { upsertVerdictComment } from './comment.js';
 
@@ -196,7 +196,7 @@ async function run(): Promise<void> {
     core.setOutput('decision', decision.effect);
     core.setOutput('risk-score', String(decision.riskScore));
     core.setOutput('risk-level', decision.riskLevel);
-    core.setOutput('matched-rules', JSON.stringify(decision.matchedRules.map((r: import('@agentowners/core').MatchedRule) => r.name)));
+    core.setOutput('matched-rules', JSON.stringify(decision.matchedRules.map((r: import('@agent-owners/core').MatchedRule) => r.name)));
 
     // 13. Write audit artifact
     const auditRecord = renderAuditJson({

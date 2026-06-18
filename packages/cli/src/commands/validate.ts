@@ -1,6 +1,6 @@
 import * as path from 'path'
 import { Command } from 'commander'
-import { loadPolicyFile } from '@agentowners/core'
+import { loadPolicyFile } from '@agent-owners/core'
 import { ZodError } from 'zod'
 
 export function registerValidate(program: Command): void {
