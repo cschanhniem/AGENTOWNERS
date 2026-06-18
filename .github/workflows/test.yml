@@ -27,8 +27,11 @@ jobs:
       - name: Build packages
         run: pnpm build
 
-      - name: Run tests with coverage
-        run: pnpm test -- --coverage
+      - name: Run tests
+        run: pnpm test
+
+      - name: Coverage (core only)
+        run: pnpm --filter @agentowners/core test -- --coverage
 
       - name: Type check
         run: pnpm typecheck
@@ -38,5 +41,5 @@ jobs:
         if: always()
         with:
           name: coverage
-          path: packages/*/coverage/
+          path: packages/core/coverage/
           retention-days: 14
