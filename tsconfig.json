@@ -1,5 +1,11 @@
 {
   "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "paths": {
+      "@agentowners/core": ["./packages/core/src/index.ts"],
+      "@agentowners/core/*": ["./packages/core/src/*"]
+    }
+  },
   "include": ["packages/*/src/**/*"],
   "exclude": ["node_modules", "packages/*/dist"]
 }
